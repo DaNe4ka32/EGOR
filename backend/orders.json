@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1768341108799,
+    "userId": 1,
+    "items": [
+      {
+        "id": 2,
+        "name": "Перчатки медицинские",
+        "price": 200,
+        "size": "M",
+        "image": "https://picsum.photos/300/200?random=2",
+        "quantity": 1
+      }
+    ],
+    "total": 200,
+    "shippingInfo": {
+      "name": "ывфв",
+      "address": "фыв",
+      "phone": "123"
+    },
+    "paymentInfo": {
+      "type": "cash",
+      "cardNumber": "",
+      "expiryDate": "",
+      "cvv": ""
+    },
+    "date": "2026-01-13T21:51:48.799Z"
+  },
+  {
+    "id": 1768423154372,
+    "userId": 1,
+    "items": [
+      {
+        "id": 5,
+        "name": "Маска медицинская",
+        "price": 50,
+        "size": "One Size",
+        "image": "https://picsum.photos/300/200?random=5",
+        "quantity": 1
+      },
+      {
+        "id": 2,
+        "name": "Перчатки медицинские",
+        "price": 200,
+        "size": "S",
+        "image": "https://picsum.photos/300/200?random=2",
+        "quantity": 1
+      }
+    ],
+    "total": 250,
+    "shippingInfo": {
+      "name": "вавыа",
+      "address": "выаыв",
+      "phone": "12312"
+    },
+    "paymentInfo": {
+      "type": "cash",
+      "cardNumber": "",
+      "expiryDate": "",
+      "cvv": ""
+    },
+    "date": "2026-01-14T20:39:14.372Z"
+  },
+  {
+    "id": 1768515443985,
+    "userId": 1,
+    "items": [
+      {
+        "id": 1,
+        "name": "Куртка строительная",
+        "price": 1500,
+        "size": "M",
+        "image": "https://picsum.photos/300/200?random=1",
+        "quantity": 3
+      },
+      {
+        "id": 2,
+        "name": "Перчатки медицинские",
+        "price": 200,
+        "size": "S",
+        "image": "https://picsum.photos/300/200?random=2",
+        "quantity": 2
+      },
+      {
+        "id": 2,
+        "name": "Перчатки медицинские",
+        "price": 200,
+        "size": "M",
+        "image": "https://picsum.photos/300/200?random=2",
+        "quantity": 1
+      }
+    ],
+    "total": 5100,
+    "shippingInfo": {
+      "name": "ууу",
+      "address": "цйуц",
+      "phone": "232"
+    },
+    "paymentInfo": {
+      "type": "cash",
+      "cardNumber": "",
+      "expiryDate": "",
+      "cvv": ""
+    },
+    "date": "2026-01-15T22:17:23.985Z"
+  },
+  {
+    "id": 1768598115319,
+    "userId": 4,
+    "items": [
+      {
+        "id": 1,
+        "name": "Куртка строительная утепленная",
+        "price": 250,
+        "size": "L",
+        "image": "/image/Куртка строительная утепленная.jpg",
+        "quantity": 1
+      },
+      {
+        "id": 2,
+        "name": "Комбинезон рабочий с карманами",
+        "price": 320,
+        "size": "L",
+        "image": "/image/Комбинезон рабочий с карманами.jpg",
+        "quantity": 1
+      }
+    ],
+    "total": 570,
+    "shippingInfo": {
+      "name": "Владимир",
+      "address": "г. Минск, ул.Якуба Коласа, д. 10, кв. 25",
+      "phone": "+375 44 277 90 09"
+    },
+    "paymentInfo": {
+      "type": "cash",
+      "cardNumber": "",
+      "expiryDate": "",
+      "cvv": ""
+    },
+    "date": "2026-01-16T21:15:15.319Z"
+  }
+]

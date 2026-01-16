@@ -1,0 +1,160 @@
+// === Функция авторизации пользователя (Login Function) ===
+app.post("/api/auth/login", (req, res) => {
+  const { email, password } = req.body;
+  const users = readUsers();
+  const user = users.find(
+    (u: any) => u.email === email && u.password === password
+  );
+  if (user) {
+    res.json({
+      token: "mocktoken",
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
+      },
+    });
+  } else {
+    res.status(401).json({ message: "Invalid credentials" });
+  }
+});
+
+// === Функция регистрации пользователя (Register Function) ===
+app.post("/api/auth/register", (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+  const users = readUsers();
+  if (users.find((u: any) => u.email === email)) {
+    return res.status(400).json({ message: "User already exists" });
+  }
+  const newUser = {
+    id: users.length + 1,
+    email,
+    password, // В реальном приложении хэшировать пароль
+    name: `${firstName} ${lastName}`,
+    avatar: `https://picsum.photos/100/100?random=${users.length + 1}`,
+  };
+  users.push(newUser);
+  writeUsers(users);
+  res.json({
+    token: "mocktoken",
+    user: {
+      id: newUser.id,
+      email: newUser.email,
+      name: newUser.name,
+      avatar: newUser.avatar,
+    },
+  });
+});
+
+// === Функция добавления товара в корзину (Add to Cart Function) ===
+const addToCart = (item: Omit<CartItem, "quantity">) => {
+  const existingItem = cart.find(
+    (cartItem) => cartItem.id === item.id && cartItem.size === item.size
+  );
+  if (existingItem) {
+    const updatedCart = cart.map((cartItem) =>
+      cartItem.id === item.id && cartItem.size === item.size
+        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+        : cartItem
+    );
+    saveCart(updatedCart);
+  } else {
+    saveCart([...cart, { ...item, quantity: 1 }]);
+  }
+};
+
+// === Функция удаления товара из корзины (Remove from Cart Function) ===
+const removeFromCart = (id: number, size: string) => {
+  const updatedCart = cart.filter(
+    (item) => !(item.id === id && item.size === size)
+  );
+  saveCart(updatedCart);
+};
+
+// === Функция оформления заказа (Place Order Function) ===
+app.post("/api/orders", (req, res) => {
+  const { userId, items, total, shippingInfo, paymentInfo } = req.body;
+  const orders = readOrders();
+  const newOrder = {
+    id: Date.now(),
+    userId,
+    items,
+    total,
+    shippingInfo,
+    paymentInfo,
+    date: new Date().toISOString(),
+  };
+  orders.push(newOrder);
+  writeOrders(orders);
+  console.log("New order:", newOrder);
+  res.json({ message: "Order placed successfully", orderId: newOrder.id });
+});
+
+// Файлы для диаграммы компонентов:
+// Фронтенд:
+// - App.tsx
+// - main.tsx
+// - components/Footer.tsx
+// - components/Header.tsx
+// - components/SizeSelectorModal.tsx
+// - contexts/AuthContext.tsx
+// - contexts/AuthContextValue.ts
+// - contexts/CartContext.tsx
+// - contexts/CartContextValue.ts
+// - contexts/CategoriesContext.tsx
+// - contexts/CategoriesContextValue.ts
+// - hooks/useAuth.ts
+// - hooks/useCart.ts
+// - hooks/useCategories.ts
+// - pages/CartPage.tsx
+// - pages/CatalogPage.tsx
+// - pages/CheckoutPage.tsx
+// - pages/HomePage.tsx
+// - pages/LoginPage.tsx
+// - pages/ProductPage.tsx
+// - pages/ProfilePage.tsx
+// - pages/RegisterPage.tsx
+// - types/auth.ts
+// - types/categories.ts
+// - types/product.ts
+// Бэкенд:
+// - backend/src/index.ts
+
+// Упрощенная диаграмма компонентов:
+//
+// Frontend:
+// - App.tsx (главный компонент)
+//   - Header.tsx
+//   - Pages:
+//     - HomePage.tsx
+//     - CatalogPage.tsx
+//     - ProductPage.tsx
+//     - CartPage.tsx
+//     - CheckoutPage.tsx
+//     - LoginPage.tsx
+//     - RegisterPage.tsx
+//     - ProfilePage.tsx
+//   - Footer.tsx
+//   - SizeSelectorModal.tsx (модальное окно)
+// - Contexts:
+//   - AuthContext.tsx (авторизация)
+//   - CartContext.tsx (корзина)
+//   - CategoriesContext.tsx (категории)
+// - Hooks:
+//   - useAuth.ts
+//   - useCart.ts
+//   - useCategories.ts
+// - Types:
+//   - auth.ts
+//   - categories.ts
+//   - product.ts
+//
+// Backend:
+// - index.ts
+//   - API Routes:
+//     - /api/auth/login (авторизация)
+//     - /api/auth/register (регистрация)
+//     - /api/orders (оформление заказа)
+//     - /api/comments (комментарии)
+//     - /api/users (обновление пользователя)
