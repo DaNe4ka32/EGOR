@@ -1,52 +1,57 @@
-// api/auth/login.js
-const users = require('../../src/users.json');
-
+// api/auth/login.js - альтернативный вариант
 module.exports = async (req, res) => {
   // Разрешаем CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  // Для предварительных запросов
   if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     return res.status(200).end();
   }
 
-  // Только POST запросы
+  // Устанавливаем CORS для основного ответа
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Метод не разрешен' });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  try {
-    const { email, password } = req.body;
-
-    // Валидация
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Заполните все поля' });
+  // ТЕСТ: Проверьте, что файл существует
+  console.log('Current dir:', __dirname);
+  
+  const users = [
+    {
+      id: 1,
+      email: "oplikov@gmail.com",
+      password: "op12op77",
+      name: "Антон Опилков",
+      avatar: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQEA..."
+    },
+    {
+      id: 2,
+      email: "qwe@gmail.com",
+      password: "12332111",
+      name: "qwe qwe",
+      avatar: "https://pic.usm.photos/100/100?random=2"
     }
+  ];
 
-    // Ищем пользователя
-    const user = users.find(u => 
-      u.email.toLowerCase() === email.toLowerCase() && 
-      u.password === password
-    );
+  const { email, password } = req.body;
+  
+  const user = users.find(u => 
+    u.email === email && u.password === password
+  );
 
-    if (!user) {
-      return res.status(401).json({ message: 'Неверный email или пароль' });
-    }
-
-    // Возвращаем данные пользователя (без пароля!)
-    const { password: _, ...userWithoutPassword } = user;
-    
-    // Можно сгенерировать JWT токен, но для простоты вернем пользователя
-    res.status(200).json({
+  if (user) {
+    const { password: _, ...userData } = user;
+    return res.status(200).json({
       success: true,
-      user: userWithoutPassword,
-      token: 'mock-jwt-token-' + Date.now() // Замените на реальный JWT
+      user: userData,
+      token: 'test-token'
     });
-
-  } catch (error) {
-    console.error('Ошибка входа:', error);
-    res.status(500).json({ message: 'Внутренняя ошибка сервера' });
   }
+
+  return res.status(401).json({
+    success: false,
+    message: 'Неверные данные'
+  });
 };
